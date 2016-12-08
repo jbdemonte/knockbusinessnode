@@ -1,0 +1,23 @@
+{
+  "name": "knockprobe",
+  "version": "1.0.0",
+  "description": "Knock Business Probes",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "test-covered": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec ./test/*",
+    "test-covered-html": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "microtime": "^2.1.2",
+    "unix-dgram": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0"
+  }
+}
