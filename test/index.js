@@ -1,5 +1,4 @@
 var unix = require('unix-dgram');
-var microtime = require('microtime');
 var fs = require('fs');
 var expect = require('chai').expect;
 var Knock = require('../index');
@@ -212,9 +211,9 @@ describe('knockprobe', function () {
   [
     true, false, null, undefined, 0, 1, {}, [],
     ['api_facebook_request'],
-    ['api_facebook_request', microtime.now(), 'something else'],
-    ['', microtime.now()],
-    [(new Array(100)).join('A'), microtime.now()]
+    ['api_facebook_request', 12343, 'something else'],
+    ['', 12343],
+    [(new Array(100)).join('A'), 12343]
   ].forEach(function (timecode) {
 
     it('should reject an invalid timecode in a stop_delay: ' + JSON.stringify(timecode), function (done) {
