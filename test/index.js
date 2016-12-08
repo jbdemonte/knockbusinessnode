@@ -250,8 +250,8 @@ describe('knockprobe', function () {
 
   it('should handle pagination when sending tons of events', function (done) {
     var k = new Knock(socketFile);
-    var len = 30000;
-    var BUFFER_LEN = 704; // voluntary set here, instead of getting it from Knock.BUFFER_LEN for example
+    var len = 2025;
+    var BUFFER_LEN = 50; // voluntary set here, instead of getting it from Knock.BUFFER_LEN for example
 
     for (var i=0; i < len; i++) {
       expect(k.gauge('gauge' + i, i)).to.eql(true);
@@ -269,7 +269,7 @@ describe('knockprobe', function () {
         expect(chunk.length).to.eql(index < chunks.length - 1 ? BUFFER_LEN : len % BUFFER_LEN);
       });
       done();
-    }, 300);
+    }, 1000);
   });
 
 });

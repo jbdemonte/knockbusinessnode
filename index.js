@@ -2,11 +2,25 @@ var unix = require('unix-dgram');
 
 module.exports = Knock;
 
-var BUFFER_LEN = 704;
+/**
+ * Knock class
+ * @param {object|string} options - If string: socket path
+ * @param {string} options.path="/var/run/knockdaemon.udp.socket" - socket path
+ * @param {number} options.bufferLen=50 - buffer len
+ */
+function Knock(options) {
 
-function Knock(socketPath) {
+  if (typeof options === 'string') {
+    options = {
+      path: options
+    };
+  }
 
-  socketPath = socketPath || '/var/run/knockdaemon.udp.socket';
+  options = Object.assign({}, {
+    path: '/var/run/knockdaemon.udp.socket',
+    bufferLen: 50
+  }, options);
+
   var counters = {};
   var gauges = {};
   var delays = [];
@@ -46,7 +60,7 @@ function Knock(socketPath) {
     gauges = {};
     delays = [];
 
-    return send(socketPath, items);
+    return send(options, items);
   };
 
 }
@@ -79,24 +93,31 @@ function isClean(item) {
 
 /**
  * Send data to the socket
- * @param {string} path
+ * @param {object} options
+ * @param {string} options.path
+ * @param {number} options.bufferLen
  * @param {Array} items
  * @return {number}
  */
-function send(path, items) {
+function send(options, items) {
   var len = items.length;
-  if (len) {
-    var message;
-    var client = unix.createSocket('unix_dgram');
-    client.on('error', console.error);
-    while (items.length) {
-      message = Buffer(JSON.stringify(items.splice(0, BUFFER_LEN)));
-      client.send(message, 0, message.length, path);
-    }
-    client.close();
+  if (!len) {
+    return len;
   }
+  var client = unix.createSocket('unix_dgram');
+  function run() {
+    var message = Buffer(JSON.stringify(items.splice(0, options.bufferLen)));
+    client.send(message, 0, message.length, options.path);
+    if (items.length) {
+      setTimeout(run, 10);
+    } else {
+      client.close();
+    }
+  }
+  run();
   return len;
 }
+
 
 /**
  * Return True if the value is a numeric
