@@ -4,6 +4,15 @@ node_js:
   - 0.10
   - 4.0
   - stable
+env:
+  - CXX=g++-4.8
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 
 script: "npm run-script test-covered"
 after_script: "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
