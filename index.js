@@ -1,5 +1,4 @@
 var unix = require('unix-dgram');
-var microtime = require('microtime');
 
 module.exports = Knock;
 
@@ -21,14 +20,14 @@ function Knock(socketPath) {
   });
 
   this.start_delay = cleanDecorator(this, false, function (item) {
-    return [item, microtime.now()];
+    return [item, time()];
   });
 
   this.stop_delay = function (timecode) {
     if (!Array.isArray(timecode) || timecode.length !== 2 || !isClean(timecode[0]) || !isNumeric(timecode[1])) {
       return false;
     }
-    delays.push([timecode[0], 'DTC', (microtime.now() - timecode[1]) / 1000]);
+    delays.push([timecode[0], 'DTC', time() - timecode[1]]);
     return true;
   };
 
@@ -106,4 +105,13 @@ function send(path, items) {
  */
 function isNumeric(value) {
   return typeof value === "number" && Number.isFinite(value);
+}
+
+/**
+ * Return hrtime in ms
+ * @return {number}
+ */
+function time() {
+  var hrtime = process.hrtime();
+  return hrtime[0] * 1e3 + hrtime[1] / 1e6;
 }

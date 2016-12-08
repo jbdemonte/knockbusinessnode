@@ -242,11 +242,11 @@ describe('knockprobe', function () {
         received = received.shift();
         expect(received[0]).to.eql('api_facebook_request');
         expect(received[1]).to.eql('DTC');
-        expect(received[2]).to.within(290, 350);
+        expect(received[2]).to.within(1150, 1250);
         done();
       });
 
-    }, 300);
+    }, 1200);
   });
 
   it('should handle pagination when sending tons of events', function (done) {
