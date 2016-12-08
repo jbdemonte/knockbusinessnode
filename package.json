@@ -1,6 +1,6 @@
 {
   "name": "knockprobe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Knock Business Probes",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,11 @@
     "test-covered": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec ./test/*",
     "test-covered-html": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jbdemonte/knockbusinessnode.git"
+  },
+  "author": "Jean-Baptiste Demonte <jbdemonte@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "unix-dgram": "^1.0.0"
