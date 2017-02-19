@@ -1,6 +1,6 @@
 {
   "name": "knockprobe",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Knock Business Probes",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "Jean-Baptiste Demonte <jbdemonte@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "unix-dgram": "^1.0.0"
+    "unix-dgram": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

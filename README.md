@@ -6,69 +6,89 @@ Knock Probes
 
 This library contains a class to send business probe to knock daemon.
 
-https://knock.center
+https://knocKnock.center
 
 # Requirements
 
-- Knockdaemon
-- An account on [Knock](https://knock.center)
+- Knockdaemon installed
+- An account on [Knock](https://knocKnock.center)
 
-
-# Example
-
-## Installation
+# Install
 
 ```bash
 npm install knockprobe
 ```
 
-## Push a Gauge Probe
-You can push a gauge probe one by one without declare first.
+# Type of probe
+
+## Gauge
+A simple counter, storing a current instant value. Last value provided wins.
+Gauges are used in quantity cases. For example, a gauge could be defined by the amount of basket being processed.
+
+## Increment
+A simple counter, storing cumulative values and graphing them as delta per second.
+Increment is typically an recurrent event. For example, an increment could be defined by the number of basket validated.
+
+## Delay
+A simple counter, storing execution time and graphing them by execution time interval.
+For example, a delay could be defined by the time of execution of external request.
+
+
+# Example
+
+## Connect
+Connect to the Knock daemon first.
 
 ```javascript
-var Knock = require('knockprobe'); 
-var k = new Knock();
+var Knock = require('knockprobe');
+Knock.connect();
+```
 
-k.gauge('apple', 2);
-k.gauge('orange', 3);
+## Push a Gauge Probe
+You can push a gauge probe one by one without declaring it first.
 
-k.commit();
+```javascript
+Knock.gauge('apple', 2);
+Knock.gauge('orange', 3);
+Knock.commit();
 ```
 
 ## Push a Counter Probe
-You can push a increment probe.
+You can push an increment probe.
 
 ```javascript
-var Knock = require('knockprobe'); 
-var k = new Knock();
-
-k = new Knock();
-k.increment('action1', 1);
-
-k.commit();
+Knock.increment('action1', 1);
+Knock.commit();
 ```
 
 ## Delay to Count
 
-Delay to count is a spécial probe. This probe agregate all execution time in a dict of range of time.
+Delay to count is a special probe. This probe aggregate all execution time in a dictionnary of range of time.
 
 ```javascript
-var Knock = require('knockprobe'); 
-var k = new Knock();
-
-k = new Knock();
-timecode = k.start_delay('api_facebook_request');
+timecode = Knock.start_delay('api_facebook_request');
 // do something
-k.stop_delay(timecode);
-
-k.commit();
+Knock.stop_delay(timecode);
+Knock.commit();
 ```
 
 ## Commit
 
-All data are sent calling `commit` command.  
-You can commit after each update or use your own scheduler to do it. 
+All data are sent calling `commit` command.
+You also can use the autocommit feature:
 
+```javascript
+Knock.autocommit(2000); // commit will be called each 2000ms
+```
+
+## Disconnecting
+
+When disconnecting, a disableable commit is processed first.
+```javascript
+Knock.disconnect();
+// or
+Knock.disconnect(false); // do not commit latest data
+```
 
 [npm-url]: https://npmjs.org/package/knockprobe
 [npm-image]: https://badge.fury.io/js/knockprobe.svg

@@ -1,6 +1,7 @@
 language: node_js
 
 node_js:
+  - 0.10
   - 4.0
   - stable
 env:
@@ -13,5 +14,5 @@ addons:
     packages:
       - g++-4.8
 
-script: "npm run-script test-covered"
-after_script: "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+script: npm run-script test-covered
+after_script: cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
