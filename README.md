@@ -67,7 +67,7 @@ Knock.commit();
 Delay to count is a special probe. This probe aggregate all execution time in a dictionnary of range of time.
 
 ```javascript
-timecode = Knock.start_delay('api_facebook_request');
+var timecode = Knock.start_delay('api_facebook_request');
 // do something
 Knock.stop_delay(timecode);
 Knock.commit();
