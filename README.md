@@ -10,6 +10,7 @@ https://knocKnock.center
 
 # Requirements
 
+- NodeJS +4.6
 - Knockdaemon installed
 - An account on [Knock](https://knocKnock.center)
 
